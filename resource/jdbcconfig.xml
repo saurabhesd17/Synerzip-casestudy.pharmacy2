@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/util
+ http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<!-- <context:property-placeholder location="classpath:com/example/resource/Pharmacy.properties" /> -->
+
+	<bean name="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3360/projectpharmacy" />
+		<property name="username" value="root" />
+		<property name="password" value="saurabh17" />
+	</bean>
+
+	<bean name="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="ds" />
+		</property>
+	</bean>
+
+
+	<!-- Pharmacy -->
+	<bean name="pharmacyDao" class="com.example.dao.PharmacyServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean name="pharmacy" class="com.example.entities.Pharmacy"/>
+
+	
+	<!-- Doctor -->
+	<bean name="doctorDao" class="com.example.dao.DoctorServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+
+	<!-- Medicine -->
+	<bean name="medicineDao" class="com.example.dao.MedicineServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+
+
+	<!-- Order -->
+	<bean name="orderDao" class="com.example.dao.OrderServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+
+	<!-- Inventory -->
+	<bean name="inventoryDao" class="com.example.dao.InventoryServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+</beans>
